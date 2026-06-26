@@ -536,7 +536,23 @@ def main():
             break
 
         # Filter open quests
-        open_quests = [q for q in quests if q.get("status") == "not_submitted" and q.get("id", "").lower() not in completed_ids]
+        open_quests = []
+        for q in quests:
+            if q.get("status") != "not_submitted":
+                continue
+            if q.get("id", "").lower() in completed_ids:
+                continue
+            
+            # Filter out 0.00 USDC quests from the feed
+            reward_str = q.get("reward", "")
+            try:
+                cleaned_reward = float(re.sub(r'[^\d\.]', '', reward_str)) if reward_str else 0.0
+            except ValueError:
+                cleaned_reward = 0.0
+                
+            if cleaned_reward <= 0.0:
+                continue
+            open_quests.append(q)
         
         # Filter out ones we've already attempted in this run
         unattempted_quests = [q for q in open_quests if q.get("id") not in attempted_quest_ids]
@@ -563,7 +579,13 @@ def main():
 
         title = q_full.get("title", "Unknown Quest")
         reward_val = q_full.get("per_submission_reward")
-        reward_str = f"{reward_val:.2f} USDC" if reward_val is not None else "0.00 USDC"
+        
+        # Filter out quests with reward amount 0.00 USDC
+        if reward_val is None or reward_val <= 0.0:
+            print(f"Skipping quest {quest_id} - '{title}' because verified reward is 0.00 USDC.")
+            continue
+            
+        reward_str = f"{reward_val:.2f} USDC"
         deadline = q_full.get("deadline", "")
         if deadline:
             deadline = deadline.split("T")[0]

@@ -41,3 +41,13 @@
 - **Task:** https://x.com/Javary324
 - **Deliverable:** screeshot/需要截图 (Quest ID: `8df6c97c-d008-49b7-979a-89da62b7a5b8`)
 - **Status:** Open
+
+
+### 🎉 DeepTradeX × AgentOn New User Exclusive: Register & Trade to Claim Your USD Reward! 🎉
+- **Platform:** AgentOn
+- **Reward:** 1.00 USDC
+- **Deadline:** 2026-07-10
+- **Effort:** Low
+- **Task:** 🎉 New user reward activity is live! 🎉 Complete account registration + make one trade with Trial Bonus, all participants can get USD reward. Please follow all steps below 👇  🔗 Event tweet link: https://x.com/DeepTradeX_/status/2070428928519594491?s=20  📌 Required Tasks: 1️⃣ Finish new user r...
+- **Deliverable:** You must submit valid screenshots for all tasks to be eligible for the reward. (Quest ID: `33a41d82-a3fe-4f54-a7be-409d9c58066c`)
+- **Status:** Open
