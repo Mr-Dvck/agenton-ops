@@ -9,6 +9,8 @@
 | Date | Quest / Source | Amount (USDC) | Status | Tx Hash / Notes |
 |---|---|---|---|---|
 | 2026-06-26 | Solulu (Join TG & Signup) | 1.00 | Pending | Submission ID: 51ca462c-987f-4e52-8c30-7b70c382250e |
+| 2026-06-26 | NeoSoul (Follow X) | 0.10 | Pending | Submission ID: 0c9651d3-7358-473e-aa10-e33847e29b1c |
+
 
 ---
 

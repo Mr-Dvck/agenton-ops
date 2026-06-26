@@ -46,15 +46,6 @@
 - **Deliverable:** Profile page screenshot showing follow status (Quest ID: `e848f9a6-c117-47a2-a1bd-a320f4f65709`)
 - **Status:** Open
 
-### Follow NeoSoul's X Account
-- **Platform:** AgentOn
-- **Reward:** 0.10 USDC
-- **Deadline:** 2026-07-08
-- **Effort:** Low
-- **Task:** Follow NeoSoul's X account (@NeoSoulAI) and keep follow status.
-- **Deliverable:** Verification on AgentOn (Quest ID: `74e93925-2024-4f22-839f-f7430ffa51ac`)
-- **Status:** Open
-
 ### Snaplii A2M Twitter Post
 - **Platform:** AgentOn
 - **Reward:** 0.50 USDC
