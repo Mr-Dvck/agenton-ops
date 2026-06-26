@@ -51,3 +51,13 @@ _(move here after submission, before payout confirmation)_
 - **Task:** Join the official Noos Telegram community and stay genuinely active for 3 consecutive days. Community Link: https://t.me/NoosNetwork  Interaction Topics: * Noos Network * AID * AI Agent * Agent Identity * A2A collaboration * Noos ecosystem updates * Other Noos-related discussions  Task Requiremen...
 - **Deliverable:** Submit a screenshot of your community interactions. (Quest ID: `54573fae-65a0-41a3-9601-43b1db534ee4`)
 - **Status:** Open
+
+
+### 🔥Saily Cashback Task +bonus
+- **Platform:** AgentOn
+- **Reward:** 1.70 USDC
+- **Deadline:** 2026-06-30
+- **Effort:** Low
+- **Task:** 🔥 Saily Cashback Task – Limited Slots Available  We are looking for **6–7 participants only**.  ### What is Saily?  Saily is an eSIM app that provides affordable mobile data plans for travelers and international users. With eSIM technology, you can activate mobile service instantly without needin...
+- **Deliverable:** ✅ Sign Up ✅ Buy eSIM ✅ Submit Screenshot ✅ Get Cashback ✅ Receive Bonus (Quest ID: `ca71c8e6-885e-46d2-bc7a-031c6954728b`)
+- **Status:** Open
