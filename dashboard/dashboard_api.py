@@ -416,6 +416,50 @@ def get_scheduler_status() -> list[dict]:
 
 # ── Routes ────────────────────────────────────────────────────────────────────
 
+def get_token_efficiency() -> dict:
+    """Calculate token efficiency (total_cost_usd / total_earned_usd) per platform/category."""
+    payouts_file = MULTI_EARN / "payouts.json"
+    efficiency = {}
+    if not payouts_file.exists():
+        return efficiency
+    try:
+        payouts = json.loads(payouts_file.read_text(encoding="utf-8"))
+        # Group by platform and category
+        grouped = {}
+        for p in payouts:
+            plat = p.get("platform", "Unknown")
+            cat = p.get("category", "other") or "other"
+            key = (plat, cat)
+            if key not in grouped:
+                grouped[key] = {"cost": 0.0, "earned": 0.0}
+            metrics = p.get("token_metrics", {})
+            grouped[key]["cost"] += float(metrics.get("total_cost_usd", 0.0))
+            status = str(p.get("status", "")).lower().strip()
+            if any(x in status for x in ("paid", "completed", "accepted")):
+                grouped[key]["earned"] += float(p.get("reward_usd", 0.0))
+        for (plat, cat), data in grouped.items():
+            ratio = 0.0
+            if data["earned"] > 0:
+                ratio = data["cost"] / data["earned"]
+            if plat not in efficiency:
+                efficiency[plat] = {}
+            efficiency[plat][cat] = round(ratio, 5)
+    except Exception as e:
+        print(f"[dashboard_api] Error computing token efficiency: {e}")
+    return efficiency
+
+def get_client_reputation() -> dict:
+    """Load client reputation stats from clients.json."""
+    clients_file = MULTI_EARN / "clients.json"
+    if not clients_file.exists():
+        return {}
+    try:
+        data = json.loads(clients_file.read_text(encoding="utf-8"))
+        return data.get("clients", {})
+    except Exception as e:
+        print(f"[dashboard_api] Error reading clients.json: {e}")
+        return {}
+
 @app.route("/")
 def index():
     return send_from_directory(str(ROOT / "dashboard"), "index.html")
@@ -474,6 +518,8 @@ def api_summary():
         "recent_submissions": sorted(earnings, key=lambda x: x["date"], reverse=True)[:20],
         "scheduler": get_scheduler_status(),
         "efficiency": efficiency,
+        "token_efficiency": get_token_efficiency(),
+        "client_reputation": get_client_reputation(),
         "last_updated": datetime.now().isoformat(),
     })
 
