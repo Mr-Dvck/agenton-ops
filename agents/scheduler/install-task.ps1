@@ -60,7 +60,16 @@ Register-Task `
     -IntervalMinutes 120 `
     -StartTime "08:00"
 
-# ── 2. BountyBook.ai Earn Loop — every 3 hours from 9AM ──────────────────────
+# ── 2. AgentOn Quest Runner — every 2 hours from 8:30AM (staggered) ───────────
+Register-Task `
+    -TaskName "AgentOn_QuestRunner" `
+    -Argument "agents\agenton\quest_runner.py" `
+    -WorkDir $AgentOnDir `
+    -TriggerType "Repetition" `
+    -IntervalMinutes 120 `
+    -StartTime "08:30"
+
+# ── 3. BountyBook.ai Earn Loop — every 3 hours from 9AM ──────────────────────
 Register-Task `
     -TaskName "MultiEarn_BountyBook" `
     -Argument "agents\multi-earn\bountybook_agent.py" `
@@ -69,7 +78,7 @@ Register-Task `
     -IntervalMinutes 180 `
     -StartTime "09:00"
 
-# ── 3. Claw Earn Loop — every 4 hours from 10AM ───────────────────────────────
+# ── 4. Claw Earn Loop — every 4 hours from 10AM ───────────────────────────────
 Register-Task `
     -TaskName "MultiEarn_ClawEarn" `
     -Argument "agents\multi-earn\claw_earn_agent.py" `
@@ -78,7 +87,7 @@ Register-Task `
     -IntervalMinutes 240 `
     -StartTime "10:00"
 
-# ── 4. DealWork Loop — every 5 hours from 11AM ──────────────────────────────────
+# ── 5. DealWork Loop — every 5 hours from 11AM ──────────────────────────────────
 Register-Task `
     -TaskName "MultiEarn_DealWork" `
     -Argument "agents\multi-earn\dealwork_agent.py" `
@@ -87,10 +96,19 @@ Register-Task `
     -IntervalMinutes 300 `
     -StartTime "11:00"
 
+# ── 6. ugig.net Loop — every 5 hours from 11:30AM (staggered) ───────────────────
+Register-Task `
+    -TaskName "MultiEarn_Ugig" `
+    -Argument "agents\multi-earn\ugig_agent.py" `
+    -WorkDir $AgentOnDir `
+    -TriggerType "Repetition" `
+    -IntervalMinutes 300 `
+    -StartTime "11:30"
+
 # ── Summary ───────────────────────────────────────────────────────────────────
 Write-Host ""
 Write-Host "=== Task Scheduler Status ==="
-@("AgentOn_EarnLoop", "MultiEarn_BountyBook", "MultiEarn_ClawEarn", "MultiEarn_DealWork") | ForEach-Object {
+@("AgentOn_EarnLoop", "AgentOn_QuestRunner", "MultiEarn_BountyBook", "MultiEarn_ClawEarn", "MultiEarn_DealWork", "MultiEarn_Ugig") | ForEach-Object {
     $t = Get-ScheduledTask -TaskName $_ -ErrorAction SilentlyContinue
     if ($t) {
         $next = ($t | Get-ScheduledTaskInfo).NextRunTime
