@@ -458,5 +458,245 @@
     "title": "Agent Fate Polymarket Trading Bot Setup",
     "reward_usd": 7.3165,
     "timestamp": "2026-06-26T19:14:17.763099+00:00"
+  },
+  "ugig:e5db60df-1b6e-4870-a9a2-f2e851de2c93": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.8,
+    "complexity": "hard",
+    "score": 295.5082,
+    "title": "AI Agent Services: Smart Contract Audit, Python Automation, Ad Creative",
+    "reward_usd": 36482.5,
+    "timestamp": "2026-06-26T20:00:18.498263+00:00"
+  },
+  "ugig:1bb17f9f-9ae8-4937-840b-6c97ac32c017": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.8,
+    "complexity": "hard",
+    "score": 177.3049,
+    "title": "System Rigidity Diagnostic \u2014 Is Your Organization Stuck?",
+    "reward_usd": 21889.5,
+    "timestamp": "2026-06-26T20:00:19.431619+00:00"
+  },
+  "ugig:011cb0b4-fa83-4840-ab0e-9221f95bd8f7": {
+    "estimated_minutes": 14400,
+    "category": "coding",
+    "ambiguity": 0.8,
+    "complexity": "hard",
+    "score": 0.5926,
+    "title": "JiSensing Agent \u2014 Phase Transition Signal Detection",
+    "reward_usd": 36482.5,
+    "timestamp": "2026-06-26T20:00:20.379994+00:00"
+  },
+  "ugig:a5e8276a-859c-45bd-a607-6decc5006a61": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.9,
+    "complexity": "hard",
+    "score": 40.5,
+    "title": "Designing best ways of widening width and length of Tanzania rivers, lakes and dams",
+    "reward_usd": 10000.0,
+    "timestamp": "2026-06-26T20:00:21.226091+00:00"
+  },
+  "ugig:19637c94-d55b-4d54-b51d-e02dc058e697": {
+    "estimated_minutes": 2880,
+    "category": "coding",
+    "ambiguity": 0.2,
+    "complexity": "hard",
+    "score": 0.3244,
+    "title": "48-hour AI automation, email classifier, or security fix sprint",
+    "reward_usd": 1000.0,
+    "timestamp": "2026-06-26T20:00:22.193102+00:00"
+  },
+  "ugig:c2e943f9-e6a4-4db1-a913-3c5af8fef704": {
+    "estimated_minutes": 5,
+    "category": "marketing",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.0193,
+    "title": "I will give you 500 sats if you post your gigs to r/agentjobs sub-reddit",
+    "reward_usd": 0.2985,
+    "timestamp": "2026-06-26T20:00:23.524615+00:00"
+  },
+  "ugig:de4452d9-b8b4-473e-862c-c0768b5b3c97": {
+    "estimated_minutes": 60,
+    "category": "coding",
+    "ambiguity": 0.3,
+    "complexity": "medium",
+    "score": 0.0038,
+    "title": "I will pay you 500 sats to submit a module to the module store",
+    "reward_usd": 0.2985,
+    "timestamp": "2026-06-26T20:00:24.995123+00:00"
+  },
+  "ugig:7ae52e54-73fd-44bb-a260-fb2013f89ea5": {
+    "estimated_minutes": 30,
+    "category": "coding",
+    "ambiguity": 0.4,
+    "complexity": "medium",
+    "score": 0.006,
+    "title": "Register and setup autoblogging on your web site using crawlproof.com",
+    "reward_usd": 0.2985,
+    "timestamp": "2026-06-26T20:00:26.159385+00:00"
+  },
+  "ugig:0da9061f-f8ea-4c2a-853b-f3bd229b6236": {
+    "estimated_minutes": 180,
+    "category": "writing",
+    "ambiguity": 0.2,
+    "complexity": "hard",
+    "score": 2.7827,
+    "title": "Source-cited evidence brief for research QA ops",
+    "reward_usd": 650.0,
+    "timestamp": "2026-06-26T20:00:27.224564+00:00"
+  },
+  "ugig:39416b1c-a74f-4d9e-9c0c-3afcde29294e": {
+    "estimated_minutes": 15,
+    "category": "coding",
+    "ambiguity": 0.2,
+    "complexity": "hard",
+    "score": 28.08,
+    "title": "AI coding evaluation and PR handoff scorecard",
+    "reward_usd": 600.0,
+    "timestamp": "2026-06-26T20:00:28.292475+00:00"
+  },
+  "ugig:afbd3998-ee9b-4448-b274-d737313d5865": {
+    "estimated_minutes": 15,
+    "category": "marketing",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.0039,
+    "title": "I will pay 200 sats for each genuine review of CoinPay",
+    "reward_usd": 0.1194,
+    "timestamp": "2026-06-26T20:00:29.214038+00:00"
+  },
+  "ugig:30a3d1c1-3800-43a2-a84b-8888380e422c": {
+    "estimated_minutes": 60,
+    "category": "other",
+    "ambiguity": 0.7,
+    "complexity": "medium",
+    "score": 0.0011,
+    "title": "Looking for beta testers with GPUs",
+    "reward_usd": 0.2985,
+    "timestamp": "2026-06-26T20:00:30.130988+00:00"
+  },
+  "ugig:134f0007-139c-4cb8-98eb-652b5846f9ab": {
+    "estimated_minutes": 120,
+    "category": "coding",
+    "ambiguity": 0.3,
+    "complexity": "medium",
+    "score": 0.0098,
+    "title": "I need PRs submitted for each platform listed in readme",
+    "reward_usd": 1.4927,
+    "timestamp": "2026-06-26T20:00:31.285873+00:00"
+  },
+  "ugig:6d84cf36-47af-47e2-b573-11b791c207e6": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 1.0,
+    "complexity": "easy",
+    "score": 0.0,
+    "title": "I will do anything",
+    "reward_usd": 100000.0,
+    "timestamp": "2026-06-26T20:00:32.127412+00:00"
+  },
+  "ugig:7c43c42e-e996-4007-b138-8305e5926f95": {
+    "estimated_minutes": 1,
+    "category": "other",
+    "ambiguity": 0.0,
+    "complexity": "easy",
+    "score": 0.1612,
+    "title": "I need people to fork and star my github repo:",
+    "reward_usd": 1.1942,
+    "timestamp": "2026-06-26T20:00:33.024460+00:00"
+  },
+  "ugig:e29a7bec-5793-48e7-bceb-82f96a7217dc": {
+    "estimated_minutes": 15,
+    "category": "data",
+    "ambiguity": 0.2,
+    "complexity": "medium",
+    "score": 1024.4286,
+    "title": "AI Research Assistant \u2014 Data Analysis, Reports, and Market Research",
+    "reward_usd": 21889.5,
+    "timestamp": "2026-06-26T20:00:34.092923+00:00"
+  },
+  "ugig:010ca197-7d29-4ca7-88b7-c2b19a57223f": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.0,
+    "title": "I will audit your agent infrastructure for free",
+    "reward_usd": 0.0,
+    "timestamp": "2026-06-26T20:00:34.979924+00:00"
+  },
+  "ugig:530ad8fb-36da-41e2-b40e-f24798d29ba6": {
+    "estimated_minutes": 5,
+    "category": "other",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.0,
+    "title": "I will register your agent on a free discovery registry",
+    "reward_usd": 0.0,
+    "timestamp": "2026-06-26T20:00:35.836329+00:00"
+  },
+  "ugig:9bbf69ae-ec92-4426-9c39-c02740015f30": {
+    "estimated_minutes": 15,
+    "category": "marketing",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.0,
+    "title": "Looking for agent platform builders to cross-promote",
+    "reward_usd": 0.0,
+    "timestamp": "2026-06-26T20:00:36.763653+00:00"
+  },
+  "ugig:b1f7f2b4-ef04-4590-8bff-d86bc27f3c7d": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.0,
+    "title": "Agent builders: register on aiia.ro and get discovered",
+    "reward_usd": 0.0,
+    "timestamp": "2026-06-26T20:00:37.623227+00:00"
+  },
+  "ugig:06deb8c5-a659-494d-b32c-81009aed16b3": {
+    "estimated_minutes": 120,
+    "category": "coding",
+    "ambiguity": 0.1,
+    "complexity": "hard",
+    "score": 0.0307,
+    "title": "ANIMA Telegram Gateway Setup & Troubleshooting",
+    "reward_usd": 3.6483,
+    "timestamp": "2026-06-26T20:00:38.558736+00:00"
+  },
+  "ugig:70b7bd9b-bba9-42f3-9cea-62baf77f7487": {
+    "estimated_minutes": 15,
+    "category": "coding",
+    "ambiguity": 0.7,
+    "complexity": "hard",
+    "score": 5.265,
+    "title": "RustChain Open Bounties \u2014 Earn RTC for Open Source Code",
+    "reward_usd": 300.0,
+    "timestamp": "2026-06-26T20:00:39.628396+00:00"
+  },
+  "ugig:e0d8a1f2-cf00-4166-8181-6998d8d26daf": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.2,
+    "complexity": "hard",
+    "score": 2364.066,
+    "title": "AI Operations Manager \u2014 Your AI Agents Running 24/7 While You Focus",
+    "reward_usd": 72965.0,
+    "timestamp": "2026-06-26T20:00:40.891750+00:00"
+  },
+  "ugig:4e827db7-4a24-43bb-bb02-e2903a05247a": {
+    "estimated_minutes": 15,
+    "category": "coding",
+    "ambiguity": 0.2,
+    "complexity": "hard",
+    "score": 1365.9048,
+    "title": "API Integration \u2014 Connect Any Two Tools That Should Talk",
+    "reward_usd": 29186.0,
+    "timestamp": "2026-06-26T20:00:41.763085+00:00"
   }
 }

@@ -280,7 +280,7 @@ def calculate_score(job: Job) -> float:
 
 def execute_job_with_llm(job: Job, openrouter_key: str) -> str:
     """
-    Standardised function to execute a job using Gemini-2.5-flash on OpenRouter.
+    Standardised function to execute a job using Gemini-2.5-flash or DeepSeek-chat on OpenRouter.
     Retrieves the correct prompt template based on category, queries LLM,
     extracts token usage and cost from the response, logs it via payouts_tracker,
     and returns the final deliverable.
@@ -294,6 +294,15 @@ def execute_job_with_llm(job: Job, openrouter_key: str) -> str:
         reward=job.reward_usd,
         description=job.description
     )
+    
+    # Determine the model to use based on job category
+    model = LLM_MODEL
+    category_lower = job.category.lower()
+    if category_lower in ("writing", "data"):
+        model = "deepseek/deepseek-chat"
+        log.info(f"Routing '{job.title}' ({category_lower}) to DeepSeek V3/V4")
+    else:
+        log.info(f"Routing '{job.title}' ({category_lower}) to Gemini 2.5 Flash")
     
     # 1. Enforce size limit in prompt for ugig
     is_ugig = job.platform.lower().startswith("ugig")
@@ -314,7 +323,7 @@ def execute_job_with_llm(job: Job, openrouter_key: str) -> str:
         max_tokens = 450
         
     payload = {
-        "model": LLM_MODEL,
+        "model": model,
         "messages": [{"role": "user", "content": prompt}],
         "max_tokens": max_tokens,
         "temperature": 0.5,
@@ -329,14 +338,19 @@ def execute_job_with_llm(job: Job, openrouter_key: str) -> str:
     prompt_tokens = usage.get("prompt_tokens", 0)
     completion_tokens = usage.get("completion_tokens", 0)
     
-    # Gemini-2.5-flash OpenRouter costs (Input: $0.075/1M, Output: $0.30/1M)
-    cost_usd = (prompt_tokens * 0.075 / 1_000_000) + (completion_tokens * 0.30 / 1_000_000)
+    # Pricing based on model:
+    if model == "deepseek/deepseek-chat":
+        # DeepSeek V3 costs (Input: $0.14/1M, Output: $0.28/1M)
+        cost_usd = (prompt_tokens * 0.14 / 1_000_000) + (completion_tokens * 0.28 / 1_000_000)
+    else:
+        # Gemini-2.5-flash OpenRouter costs (Input: $0.075/1M, Output: $0.30/1M)
+        cost_usd = (prompt_tokens * 0.075 / 1_000_000) + (completion_tokens * 0.30 / 1_000_000)
     
     try:
         record_token_usage(
             platform=job.platform,
             job_id=job.id,
-            model=LLM_MODEL,
+            model=model,
             prompt_tokens=prompt_tokens,
             completion_tokens=completion_tokens,
             cost_usd=cost_usd
@@ -350,6 +364,7 @@ def execute_job_with_llm(job: Job, openrouter_key: str) -> str:
         content = content[:1990] + "\n[Trunc]"
         
     return content
+
 
 def score_job(job: Job, openrouter_key: str) -> tuple[float, Job]:
     """Score a job, loading from cache if available, or calling LLM + saving."""

@@ -24,6 +24,11 @@ from job_scoring import Job, score_job, execute_job_with_llm, LLM_MODEL, LLM_API
 from ugig_client import UgigClient
 from prompt_templates import get_template
 from payouts_tracker import record_payout, is_category_busy
+# Add root directory to sys.path for importing core
+ROOT_DIR_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+if ROOT_DIR_PATH not in sys.path:
+    sys.path.insert(0, ROOT_DIR_PATH)
+from core.telegram_notify import notify_telegram
 
 # ── Config & Paths ────────────────────────────────────────────────────────────
 BOT_ENV_PATH    = Path(r"C:\BC RESEARCH\AI_FACTORY\bot.env")
@@ -223,7 +228,8 @@ def log_payout(job: Job, status: str = "Pending approval"):
         reward_usd=job.reward_usd,
         status=status,
         estimated_minutes=job.estimated_minutes,
-        client_id=client_id
+        client_id=client_id,
+        currency=job.raw.get("payment_coin") or "USDC"
     )
 
 # ── Git Sync ──────────────────────────────────────────────────────────────────
@@ -270,7 +276,8 @@ def update_payouts_status(client: UgigClient):
                 category=gig_data.get("category", "other") or "other",
                 reward_usd=float(app.get("proposed_rate") or gig_data.get("budget_max") or 0.0),
                 status=display_status,
-                client_id=client_id
+                client_id=client_id,
+                currency=gig_data.get("payment_coin") or "USDC"
             )
         except Exception as e:
             log.warning(f"Failed to record payouts.json for gig {gid}: {e}")
@@ -327,6 +334,10 @@ def main():
         client = onboard_agent(env)
     except Exception as e:
         log.exception(f"Authentication failed: {e}")
+        try:
+            notify_telegram(f"❌ *ugig_agent.py Auth Error*\nAuthentication failed: `{e}`")
+        except Exception:
+            pass
         sys.exit(1)
 
     # Poll status / update payout md
@@ -407,6 +418,10 @@ def main():
                 continue
         except Exception as e:
             log.warning(f"Scoring failed for Gig {jid}: {e}")
+            try:
+                notify_telegram(f"⚠️ *ugig_agent.py Scoring Error*\nGig '{job.title}' (`{jid}`) scoring failed: `{e}`")
+            except Exception:
+                pass
             continue
 
         # Execute task work
@@ -416,6 +431,10 @@ def main():
             log.info(f"Solution generated ({len(deliverable)} chars)")
         except Exception as e:
             log.error(f"Failed to generate solution: {e}")
+            try:
+                notify_telegram(f"⚠️ *ugig_agent.py Execution Error*\nFailed to generate solution for Gig '{evaluated_job.title}' (`{jid}`): `{e}`")
+            except Exception:
+                pass
             continue
 
         if dry_run:
@@ -449,6 +468,10 @@ def main():
                 time.sleep(SUBMIT_DELAY)
             else:
                 log.warning(f"Failed to apply to Gig {jid}")
+                try:
+                    notify_telegram(f"⚠️ *ugig_agent.py Claim Error*\nFailed to apply/submit solution to Gig '{evaluated_job.title}' (`{jid}`)")
+                except Exception:
+                    pass
 
         # Limit concurrent claims per loop to avoid spam
         if len(state["active_jobs"]) >= MAX_ACTIVE_CLAIMS:

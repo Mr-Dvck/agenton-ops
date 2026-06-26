@@ -5,18 +5,26 @@ Tracks expected vs realized earnings, success rates, token usage, and category-l
 """
 
 import os
+import sys
 import json
 import logging
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 ROOT_DIR = Path(r"C:\BC RESEARCH\AI_FACTORY")
+# Add root directory to sys.path for importing core
+sys.path.insert(0, str(ROOT_DIR))
+sys.path.insert(0, str(ROOT_DIR / "core"))
+sys.path.insert(0, str(ROOT_DIR / "crypto"))
+from core.telegram_notify import notify_telegram, load_bot_env
+
 AGENTON_DIR = ROOT_DIR / "AgentOn"
 PAYOUTS_JSON = AGENTON_DIR / "outputs" / "multi-earn" / "payouts.json"
 CLIENTS_JSON = AGENTON_DIR / "outputs" / "multi-earn" / "clients.json"
 POSTMORTEMS_DIR = AGENTON_DIR / "outputs" / "multi-earn" / "postmortems"
 
 log = logging.getLogger("payouts_tracker")
+
 
 def get_cached_category(platform: str, job_id: str) -> str:
     """Read the category directly from the scored jobs cache file."""
@@ -43,11 +51,13 @@ def record_payout(
     notes: str = "",
     client_id: str = "",
     client_rating: float = 0.0,
-    client_feedback: str = ""
+    client_feedback: str = "",
+    currency: str = "USDC"
 ):
     """
     Record or update a payout entry in the unified payouts.json database.
     Performs field merging so existing values are preserved if not provided.
+    Triggers Telegram notifications and auto-withdrawals as needed.
     """
     if not category or category == "other":
         category = get_cached_category(platform, job_id)
@@ -65,8 +75,12 @@ def record_payout(
             
     # Find matching entry
     found = False
+    old_status = None
+    old_currency = "USDC"
     for p in payouts:
         if p.get("platform") == platform and str(p.get("job_id")) == str(job_id):
+            old_status = p.get("status")
+            old_currency = p.get("currency") or "USDC"
             p["status"] = status
             if title:
                 p["title"] = title
@@ -74,6 +88,8 @@ def record_payout(
                 p["category"] = category
             if reward_usd > 0:
                 p["reward_usd"] = reward_usd
+            if currency:
+                p["currency"] = currency
             if estimated_minutes is not None:
                 p["estimated_minutes"] = estimated_minutes
             if actual_minutes is not None:
@@ -116,6 +132,7 @@ def record_payout(
             "title": title,
             "category": category,
             "reward_usd": reward_usd,
+            "currency": currency,
             "status": status,
             "estimated_minutes": estimated_minutes,
             "actual_minutes": actual_minutes,
@@ -129,6 +146,49 @@ def record_payout(
         
     try:
         PAYOUTS_JSON.write_text(json.dumps(payouts, indent=2), encoding="utf-8")
+        
+        # Determine notification and withdrawal triggers
+        is_new_claim = not found
+        is_status_changed = found and old_status != status
+        is_paid_transition = (found and old_status != "paid" and status == "paid") or (not found and status == "paid")
+        
+        # Send Telegram notifications
+        if is_new_claim:
+            msg = (
+                f"✅ *Multi-Earn New Claim*\n"
+                f"• *Platform*: `{platform}`\n"
+                f"• *Job*: `{title}`\n"
+                f"• *Job ID*: `{job_id}`\n"
+                f"• *Category*: `{category}`\n"
+                f"• *Status*: `{status}`\n"
+                f"• *Reward*: `{reward_usd}` `{currency}`"
+            )
+            try:
+                notify_telegram(msg)
+            except Exception as e:
+                log.warning(f"Failed to send Telegram notification: {e}")
+        elif is_status_changed:
+            msg = (
+                f"🔄 *Multi-Earn Status Update*\n"
+                f"• *Platform*: `{platform}`\n"
+                f"• *Job*: `{title}`\n"
+                f"• *Job ID*: `{job_id}`\n"
+                f"• *Category*: `{category}`\n"
+                f"• *Old Status*: `{old_status}`\n"
+                f"• *New Status*: `{status}`\n"
+                f"• *Reward*: `{reward_usd}` `{currency}`"
+            )
+            try:
+                notify_telegram(msg)
+            except Exception as e:
+                log.warning(f"Failed to send Telegram notification: {e}")
+                
+        # Trigger auto-withdrawal immediately on paid transition
+        if is_paid_transition:
+            try:
+                trigger_auto_withdrawal(platform, job_id, title, reward_usd, currency)
+            except Exception as e:
+                log.error(f"Auto-withdrawal trigger failed: {e}")
         
         # Trigger client reputation rebuilding
         if client_id:
@@ -146,6 +206,7 @@ def record_payout(
             )
     except Exception as e:
         log.error(f"Failed to write payouts.json: {e}")
+
 
 def record_token_usage(
     platform: str,
@@ -424,4 +485,203 @@ def get_client_snapshot(platform: str, client_id: str) -> dict:
     except Exception:
         pass
     return {}
+
+def send_onchain_evm_transfer(coin: str, amount_usd: float) -> str | None:
+    keys = load_bot_env()
+    pk = keys.get("AGENT_ETH_PRIVATE_KEY") or keys.get("BOUNTYBOOK_PRIVATE_KEY")
+    recipient = keys.get("TREASURY_ADDRESS") or "0x0190C582b0eF8a4D27aaDbf73FEFc1f389bd1f5C"
+    
+    if not pk:
+        log.warning("No AGENT_ETH_PRIVATE_KEY found for on-chain withdrawal.")
+        return None
+        
+    try:
+        from web3 import Web3
+        w3 = Web3(Web3.HTTPProvider("https://mainnet.base.org"))
+        account = w3.eth.account.from_key(pk)
+        
+        gas_price = int(w3.eth.gas_price * 1.2)
+        if gas_price < w3.to_wei(0.05, 'gwei'):
+            gas_price = w3.to_wei(0.05, 'gwei') # safe minimum floor
+            
+        coin_upper = coin.upper().strip()
+        
+        if coin_upper == "USDC":
+            usdc_address = "0x833589fCD6eDb6E08f4c7C32D4f71b54bda02913"
+            usdc_abi = [
+                {"constant": True, "inputs": [{"name": "_owner", "type": "address"}], "name": "balanceOf", "outputs": [{"name": "balance", "type": "uint256"}], "type": "function"},
+                {"constant": False, "inputs": [{"name": "_to", "type": "address"}, {"name": "_value", "type": "uint256"}], "name": "transfer", "outputs": [{"name": "success", "type": "bool"}], "type": "function"},
+                {"constant": True, "inputs": [], "name": "decimals", "outputs": [{"name": "", "type": "uint8"}], "type": "function"}
+            ]
+            
+            usdc_contract = w3.eth.contract(address=w3.to_checksum_address(usdc_address), abi=usdc_abi)
+            usdc_balance_raw = usdc_contract.functions.balanceOf(account.address).call()
+            
+            if usdc_balance_raw > 0:
+                tx = usdc_contract.functions.transfer(
+                    w3.to_checksum_address(recipient),
+                    usdc_balance_raw
+                ).build_transaction({
+                    'from': account.address,
+                    'nonce': w3.eth.get_transaction_count(account.address),
+                    'gas': 60000,
+                    'gasPrice': gas_price,
+                    'chainId': 8453
+                })
+                signed = w3.eth.account.sign_transaction(tx, pk)
+                tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
+                return w3.to_hex(tx_hash)
+            else:
+                log.warning("USDC withdrawal triggered but USDC balance is 0.")
+                
+        elif coin_upper == "ETH":
+            eth_balance_wei = w3.eth.get_balance(account.address)
+            gas_limit = 21000
+            gas_cost = gas_limit * gas_price
+            reserve_wei = w3.to_wei(0.001, 'ether')
+            
+            amount_to_send = eth_balance_wei - gas_cost - reserve_wei
+            if amount_to_send > 0:
+                tx = {
+                    'nonce': w3.eth.get_transaction_count(account.address),
+                    'to': w3.to_checksum_address(recipient),
+                    'value': amount_to_send,
+                    'gas': gas_limit,
+                    'gasPrice': gas_price,
+                    'chainId': 8453
+                }
+                signed = w3.eth.account.sign_transaction(tx, pk)
+                tx_hash = w3.eth.send_raw_transaction(signed.raw_transaction)
+                return w3.to_hex(tx_hash)
+            else:
+                log.warning(f"ETH withdrawal triggered but ETH balance ({w3.from_wei(eth_balance_wei, 'ether')} ETH) is below minimum gas+reserve threshold.")
+                
+    except Exception as e:
+        log.error(f"On-chain EVM transfer failed: {e}")
+        
+    return None
+
+def trigger_kraken_withdrawal(coin: str, amount: float) -> str | None:
+    keys = load_bot_env()
+    api_key = keys.get("KRAKEN_API_KEY")
+    priv_key = keys.get("KRAKEN_PRIVATE_KEY")
+    if not api_key or not priv_key:
+        log.warning("Kraken credentials not configured for withdrawal.")
+        return None
+        
+    coin_map = {
+        "BTC": "XXBT",
+        "XBT": "XXBT",
+        "ETH": "XETH",
+        "SOL": "SOL",
+        "DOGE": "XXDG",
+        "XDG": "XXDG",
+        "USDC": "USDC"
+    }
+    asset_code = coin_map.get(coin.upper(), coin.upper())
+    
+    key_name = "TREASURY_ADDRESS"
+    if coin.upper() == "SOL":
+        key_name = "SOL_ADDRESS"
+    elif coin.upper() == "BTC":
+        key_name = "BTC_ADDRESS"
+    elif coin.upper() == "DOGE":
+        key_name = "DOGE_ADDRESS"
+        
+    try:
+        from kraken.spot import Funding
+        from crypto.kraken_client import bind_nonce
+        
+        funding = Funding(
+            key=api_key.strip().strip('"').strip("'"),
+            secret=priv_key.strip().strip('"').strip("'")
+        )
+        bind_nonce(funding)
+        
+        res = funding.withdraw_funds(asset=asset_code, key=key_name, amount=amount)
+        return res.get("refid")
+    except Exception as e:
+        log.error(f"Kraken withdrawal for {coin} failed: {e}")
+        raise e
+
+def trigger_auto_withdrawal(platform: str, job_id: str, title: str, reward_usd: float, currency: str):
+    keys = load_bot_env()
+    coin = currency.upper().strip()
+    
+    target_address = keys.get("TREASURY_ADDRESS")
+    if coin == "SOL":
+        target_address = keys.get("SOL_ADDRESS")
+    elif coin == "BTC":
+        target_address = keys.get("BTC_ADDRESS")
+    elif coin == "DOGE":
+        target_address = keys.get("DOGE_ADDRESS")
+        
+    log.info(f"Triggering auto-withdrawal for {reward_usd} {coin} to {target_address}")
+    
+    if coin in ("ETH", "USDC"):
+        tx_hash = send_onchain_evm_transfer(coin, reward_usd)
+        if tx_hash:
+            msg = (
+                f"📤 *Auto-Withdrawal Fired Successfully (On-Chain)*\n"
+                f"• *Platform*: `{platform}`\n"
+                f"• *Job*: `{title}`\n"
+                f"• *Asset*: `{coin}`\n"
+                f"• *Amount*: `{reward_usd}` USD equivalent\n"
+                f"• *Recipient*: `{target_address}`\n"
+                f"• *Tx Hash*: `{tx_hash}`"
+            )
+            notify_telegram(msg)
+        else:
+            msg = (
+                f"⚠️ *Auto-Withdrawal Failed (On-Chain)*\n"
+                f"• *Platform*: `{platform}`\n"
+                f"• *Job*: `{title}`\n"
+                f"• *Asset*: `{coin}`\n"
+                f"• *Amount*: `{reward_usd}` USD equivalent\n"
+                f"• *Recipient*: `{target_address}`\n"
+                f"• *Error*: `Transaction signing failed, execution failed, or insufficient balance`"
+            )
+            notify_telegram(msg)
+        return
+            
+    try:
+        coin_price = 1.0
+        if coin not in ("USDC", "USDT", "USD"):
+            try:
+                import requests
+                r = requests.get(f"https://api.coinbase.com/v2/prices/{coin}-USD/spot", timeout=5)
+                if r.status_code == 200:
+                    coin_price = float(r.json()["data"]["amount"])
+            except Exception:
+                fallbacks = {"SOL": 130.0, "BTC": 60000.0, "ETH": 3300.0, "DOGE": 0.12}
+                coin_price = fallbacks.get(coin, 1.0)
+                
+        coin_amount = reward_usd / coin_price
+        
+        ref_id = trigger_kraken_withdrawal(coin, coin_amount)
+        if ref_id:
+            msg = (
+                f"📤 *Auto-Withdrawal Fired Successfully (Kraken)*\n"
+                f"• *Platform*: `{platform}`\n"
+                f"• *Job*: `{title}`\n"
+                f"• *Asset*: `{coin}`\n"
+                f"• *Amount*: `{coin_amount:.6f}` `{coin}` (`${reward_usd}` USD)\n"
+                f"• *Recipient*: `{target_address}`\n"
+                f"• *Ref ID*: `{ref_id}`"
+            )
+            notify_telegram(msg)
+            return
+    except Exception as e:
+        msg = (
+            f"⚠️ *Auto-Withdrawal Failed*\n"
+            f"• *Platform*: `{platform}`\n"
+            f"• *Job*: `{title}`\n"
+            f"• *Asset*: `{coin}`\n"
+            f"• *Amount*: `${reward_usd}` USD\n"
+            f"• *Recipient*: `{target_address}`\n"
+            f"• *Error*: `{str(e)}`"
+        )
+        notify_telegram(msg)
+
+
 
