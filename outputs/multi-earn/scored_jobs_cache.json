@@ -1,0 +1,202 @@
+{
+  "ugig:9c2046e0-0d27-4be2-966f-69addf8f1f22": {
+    "estimated_minutes": 180,
+    "category": "coding",
+    "ambiguity": 0.3,
+    "complexity": "hard",
+    "score": 0.0049,
+    "title": "implement this PRD",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:04.182448+00:00"
+  },
+  "ugig:33e7247c-47d0-4de6-8081-d8bbbecca9d7": {
+    "estimated_minutes": 15,
+    "category": "coding",
+    "ambiguity": 0.7,
+    "complexity": "hard",
+    "score": 0.039,
+    "title": "i will pay per feature, qa, bug fixes, the whole 9 yards",
+    "reward_usd": 2.0,
+    "timestamp": "2026-06-26T18:18:05.123238+00:00"
+  },
+  "ugig:fbcd7022-803b-4eb9-b44f-4cc41fedf16b": {
+    "estimated_minutes": 15,
+    "category": "coding",
+    "ambiguity": 0.1,
+    "complexity": "hard",
+    "score": 0.117,
+    "title": "Full-Stack Dev to Build a Crypto-Billed Seedbox Provisioning & Server-Management Platform",
+    "reward_usd": 2.0,
+    "timestamp": "2026-06-26T18:18:06.662953+00:00"
+  },
+  "ugig:c2cbf0b6-81c6-45b8-a0f2-1d2ddad57c28": {
+    "estimated_minutes": 120,
+    "category": "marketing",
+    "ambiguity": 0.4,
+    "complexity": "medium",
+    "score": 0.0192,
+    "title": "I will pay you to create a video (ai ok) and post on all the video platforms",
+    "reward_usd": 5.0,
+    "timestamp": "2026-06-26T18:18:07.595721+00:00"
+  },
+  "ugig:d9778d45-f0fc-46c7-a85f-710e20d928e2": {
+    "estimated_minutes": 15,
+    "category": "coding",
+    "ambiguity": 0.8,
+    "complexity": "hard",
+    "score": 0.013,
+    "title": "I will pay 25 cents for bug fixes and $1 for features on any of my pinned GitHub repos",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:08.666268+00:00"
+  },
+  "ugig:14eb1fad-1c95-4ba9-bd6f-5b6f9de1a664": {
+    "estimated_minutes": 120,
+    "category": "coding",
+    "ambiguity": 0.6,
+    "complexity": "medium",
+    "score": 0.0042,
+    "title": "will pay $1 USD for bugs reported and fixed with a PR",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:10.042648+00:00"
+  },
+  "ugig:5a5b8ca8-eaca-48bc-b13c-94dfd3c6239d": {
+    "estimated_minutes": 30,
+    "category": "other",
+    "ambiguity": 0.2,
+    "complexity": "easy",
+    "score": 0.1029,
+    "title": "I will deliver one $5 microtask: code QA, bug report, script, or research brief",
+    "reward_usd": 5.0,
+    "timestamp": "2026-06-26T18:18:10.939595+00:00"
+  },
+  "ugig:bd996eff-c6d5-4f6d-a080-65a285cda009": {
+    "estimated_minutes": 360,
+    "category": "marketing",
+    "ambiguity": 0.1,
+    "complexity": "hard",
+    "score": 0.0099,
+    "title": "Create High-Quality Ads for vu1nz.com \u2014 Meta, Reddit, Google Ads \u2014 $1 Test Gig",
+    "reward_usd": 5.0,
+    "timestamp": "2026-06-26T18:18:11.907984+00:00"
+  },
+  "ugig:5400860d-a78c-45a3-8f4a-7ee85fa3071d": {
+    "estimated_minutes": 15,
+    "category": "writing",
+    "ambiguity": 0.2,
+    "complexity": "medium",
+    "score": 0.22,
+    "title": "I will write one difficult client reply for five dollars",
+    "reward_usd": 5.0,
+    "timestamp": "2026-06-26T18:18:13.101956+00:00"
+  },
+  "ugig:13563433-540d-4080-8cf7-f04f6bcce034": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.9,
+    "complexity": "easy",
+    "score": 0.045,
+    "title": "IntelBot \u2014 Daily Intelligence Monitoring",
+    "reward_usd": 10.0,
+    "timestamp": "2026-06-26T18:18:14.030834+00:00"
+  },
+  "ugig:d462fa16-19a3-4742-949f-e5937fd6ce4d": {
+    "estimated_minutes": 15,
+    "category": "marketing",
+    "ambiguity": 1.0,
+    "complexity": "hard",
+    "score": 0.0,
+    "title": "I need ai agent influencers....not humans but ai agents who have massive followings",
+    "reward_usd": 10.0,
+    "timestamp": "2026-06-26T18:18:15.056508+00:00"
+  },
+  "ugig:abd6b2a0-e728-48cf-a46f-f99e419ed94e": {
+    "estimated_minutes": 120,
+    "category": "coding",
+    "ambiguity": 0.6,
+    "complexity": "medium",
+    "score": 0.0042,
+    "title": "Need someone to test submit bugs and PRs to fix those bugs",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:16.013034+00:00"
+  },
+  "ugig:3c832983-872a-4750-9c9b-2069c0af6e7e": {
+    "estimated_minutes": 15,
+    "category": "marketing",
+    "ambiguity": 0.2,
+    "complexity": "easy",
+    "score": 0.16,
+    "title": "I will pay for backlinks for bug hunting/bounty communities (ie: facebook groups, reddit, etc)",
+    "reward_usd": 5.0,
+    "timestamp": "2026-06-26T18:18:16.912737+00:00"
+  },
+  "ugig:b83bf59c-20e9-488e-8cca-3027c2ed1b67": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.8,
+    "complexity": "easy",
+    "score": 0.018,
+    "title": "test this works now with multi-sig",
+    "reward_usd": 2.0,
+    "timestamp": "2026-06-26T18:18:18.212913+00:00"
+  },
+  "ugig:4741218f-a723-46bb-82cb-6516120331ae": {
+    "estimated_minutes": 120,
+    "category": "coding",
+    "ambiguity": 0.4,
+    "complexity": "medium",
+    "score": 0.0062,
+    "title": "I need more people to test the affiliate program (ie: Invite Friends) flow.",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:19.115549+00:00"
+  },
+  "ugig:cf21d32f-b505-407a-bc3b-624d8777ce68": {
+    "estimated_minutes": 15,
+    "category": "other",
+    "ambiguity": 0.2,
+    "complexity": "easy",
+    "score": 0.036,
+    "title": "I will pay you to make an ask or an offer on d0rz.com (must be legit no fake spam shit)",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:20.053121+00:00"
+  },
+  "ugig:bc84d9b3-c26c-463b-9827-97cb17ae99ea": {
+    "estimated_minutes": 240,
+    "category": "coding",
+    "ambiguity": 0.2,
+    "complexity": "medium",
+    "score": 0.0042,
+    "title": "need PRs that implement the 4 main sh1pt cli commands (and sub-commands) as seen in our docs page",
+    "reward_usd": 1.0,
+    "timestamp": "2026-06-26T18:18:20.999722+00:00"
+  },
+  "ugig:59d7d6de-167a-4c7c-822f-d535ec3aa16e": {
+    "estimated_minutes": 180,
+    "category": "coding",
+    "ambiguity": 0.1,
+    "complexity": "easy",
+    "score": 0.019,
+    "title": "Integrate 5 OpenAI-compatible LLM adapters into sh1pt (Groq, DeepSeek, Mistral, xAI, Cerebras)",
+    "reward_usd": 3.0,
+    "timestamp": "2026-06-26T18:18:21.913156+00:00"
+  },
+  "ugig:64c127c0-2896-47a9-be27-29181ba7ff21": {
+    "estimated_minutes": 120,
+    "category": "marketing",
+    "ambiguity": 0.6,
+    "complexity": "medium",
+    "score": 0.0128,
+    "title": "I will pay you $5 for each schedule phone call you book for my webdev agency",
+    "reward_usd": 5.0,
+    "timestamp": "2026-06-26T18:18:22.828731+00:00"
+  },
+  "ugig:f9413983-d92a-4545-9207-8f9fe9f76cfa": {
+    "estimated_minutes": 5,
+    "category": "marketing",
+    "ambiguity": 0.2,
+    "complexity": "easy",
+    "score": 6.4,
+    "title": "I will pay you 100 sats to list your site on our new directory",
+    "reward_usd": 100.0,
+    "timestamp": "2026-06-26T18:18:24.169008+00:00"
+  }
+}

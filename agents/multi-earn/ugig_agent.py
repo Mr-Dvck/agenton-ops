@@ -20,7 +20,7 @@ import requests
 
 # Add directory to sys.path for importing job_scoring & ugig_client
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from job_scoring import Job, score_job
+from job_scoring import Job, score_job, LLM_MODEL, LLM_API_BASE
 from ugig_client import UgigClient
 
 # ── Config & Paths ────────────────────────────────────────────────────────────
@@ -318,7 +318,7 @@ def main():
                 # Stagger submissions
                 time.sleep(SUBMIT_DELAY)
             else:
-                log_warning(f"Failed to apply to Gig {jid}")
+                log.warning(f"Failed to apply to Gig {jid}")
 
         # Limit concurrent claims per loop to avoid spam
         if submitted_count >= 2:
