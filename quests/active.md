@@ -28,13 +28,63 @@
 
 ## 🔴 Open Quests
 
-> No quests loaded yet. Run daily loop Step 1 to populate this list, or ask Perplexity to research current AgentOn quests.
+### iPollo Agent OS 官方推文互动任务
+- **Platform:** AgentOn
+- **Reward:** 8.80 USDC
+- **Deadline:** 2026-07-08
+- **Effort:** Low
+- **Task:** Follow @iPolloAgentOS, Quote Tweet the specified tweet (https://x.com/iPolloAgentOS/status/2063872552636956765?s=20) with a meaningful comment of at least 5 characters, and Reply to it with at least 8 characters.
+- **Deliverable:** Quoted tweet link submitted to AgentOn (Quest ID: `45935de0-31fb-4bcc-949b-e46c85a043ba`)
+- **Status:** Open
+
+### Follow $TOCO and Join the Green Meme Conversation
+- **Platform:** AgentOn
+- **Reward:** 1.00 USDC
+- **Deadline:** 2026-06-30
+- **Effort:** Low
+- **Task:** Follow @Toco_Toco_Toco, Like the designated post (https://x.com/Toco_Toco_Toco/status/2066882746148946193?s=20), and leave an original and meaningful reply (English, at least 15 words) under it.
+- **Deliverable:** Profile page screenshot showing follow status (Quest ID: `e848f9a6-c117-47a2-a1bd-a320f4f65709`)
+- **Status:** Open
+
+### Follow NeoSoul's X Account
+- **Platform:** AgentOn
+- **Reward:** 0.10 USDC
+- **Deadline:** 2026-07-08
+- **Effort:** Low
+- **Task:** Follow NeoSoul's X account (@NeoSoulAI) and keep follow status.
+- **Deliverable:** Verification on AgentOn (Quest ID: `74e93925-2024-4f22-839f-f7430ffa51ac`)
+- **Status:** Open
+
+### Snaplii A2M Twitter Post
+- **Platform:** AgentOn
+- **Reward:** 0.50 USDC
+- **Deadline:** 2026-07-01
+- **Effort:** Low
+- **Task:** Write and publish a post on X introducing Snaplii A2M. Post must mention @Snaplii, include hashtag #A2M or #AIPayment, and include link: http://github.com/Snaplii-Inc/agent-to-merchant-payments
+- **Deliverable:** Post URL submitted to AgentOn (Quest ID: `2a756993-a420-44ae-9a35-18e84db141b7`)
+- **Status:** Open
+
+### Join dePICK World Cup Blitz
+- **Platform:** AgentOn
+- **Reward:** 1.00 USDC
+- **Deadline:** 2026-06-30
+- **Effort:** Medium
+- **Task:** Follow @dePick_Official, Like & Retweet launch post, Join Telegram Group (t.me/dePICK_Official), start @dePICK_Bot, predict 3 matches.
+- **Deliverable:** Screenshot of /balance command, X/TG usernames (Quest ID: `b51f6a08-ef3c-443c-acbf-35aa77a70476`)
+- **Status:** Open
 
 ---
 
 ## 🟡 In Progress
 
-_(move quests here when Antigravity is working on them)_
+### Join TG & Signup to Get Rewards
+- **Platform:** AgentOn
+- **Reward:** 1.00 USDC
+- **Deadline:** 2026-07-08
+- **Effort:** Low
+- **Task:** Join Telegram community (@SoluluUS) and Register Account on solulu.cc.
+- **Deliverable:** Screenshots of TG Group and registered UID (`44357999`) prepared in `outputs/solulu_submission_draft.md` (Quest ID: `5539a280-3806-4980-b53c-b8a8948177ce`)
+- **Status:** Pending User Approval (Drafted)
 
 ---
 
