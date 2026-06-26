@@ -21,14 +21,21 @@ import json
 import glob
 from datetime import datetime, timedelta
 from pathlib import Path
+import sys
+import subprocess
 
 try:
-    from flask import Flask, jsonify, send_from_directory
+    import requests
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "requests", "-q"])
+    import requests
+
+try:
+    from flask import Flask, jsonify, send_from_directory, request
     from flask_cors import CORS
 except ImportError:
-    import subprocess, sys
     subprocess.check_call([sys.executable, "-m", "pip", "install", "flask", "flask-cors", "-q"])
-    from flask import Flask, jsonify, send_from_directory
+    from flask import Flask, jsonify, send_from_directory, request
     from flask_cors import CORS
 
 app = Flask(__name__, static_folder=".", static_url_path="")
@@ -293,9 +300,189 @@ def api_summary():
 def api_earnings():
     return jsonify(get_all_earnings())
 
+# ── Subprocess Management ──────────────────────────────────────────────────────
+running_processes = {}
+
+def start_agent_process(platform: str) -> str:
+    script_map = {
+        "agenton": (ROOT / "scripts" / "earn_loop.py", ROOT / "outputs" / "earn_loop.log"),
+        "bountybook": (ROOT / "agents" / "multi-earn" / "bountybook_agent.py", ROOT / "outputs" / "multi-earn" / "bountybook.log"),
+        "claw": (ROOT / "agents" / "multi-earn" / "claw_earn_agent.py", ROOT / "outputs" / "multi-earn" / "claw.log"),
+        "dealwork": (ROOT / "agents" / "multi-earn" / "dealwork_agent.py", ROOT / "outputs" / "multi-earn" / "dealwork.log")
+    }
+    if platform not in script_map:
+        return "invalid_platform"
+    
+    script_path, log_path = script_map[platform]
+    
+    p = running_processes.get(platform)
+    if p and p.poll() is None:
+        return "already_running"
+        
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    
+    try:
+        log_file = open(log_path, "w", encoding="utf-8")
+        p = subprocess.Popen(
+            [sys.executable, str(script_path)],
+            cwd=str(ROOT),
+            stdout=log_file,
+            stderr=subprocess.STDOUT,
+            text=True
+        )
+        running_processes[platform] = p
+        return "started"
+    except Exception as e:
+        return f"error: {str(e)}"
+
+def get_recent_logs(platform: str, num_lines: int = 100) -> str:
+    log_map = {
+        "agenton": ROOT / "outputs" / "earn_loop.log",
+        "bountybook": ROOT / "outputs" / "multi-earn" / "bountybook.log",
+        "claw": ROOT / "outputs" / "multi-earn" / "claw.log",
+        "dealwork": ROOT / "outputs" / "multi-earn" / "dealwork.log"
+    }
+    if platform not in log_map:
+        return "Invalid platform"
+    log_path = log_map[platform]
+    if not log_path.exists():
+        fallback_map = {
+            "agenton": ROOT / "outputs" / "submissions-log.md",
+            "bountybook": ROOT / "outputs" / "multi-earn" / "bountybook-submissions.md",
+            "claw": ROOT / "outputs" / "multi-earn" / "claw-earn-submissions.md",
+            "dealwork": ROOT / "outputs" / "multi-earn" / "dealwork-submissions.md"
+        }
+        fb = fallback_map.get(platform)
+        if fb and fb.exists():
+            return fb.read_text(encoding="utf-8", errors="ignore")
+        return "No logs generated yet. Trigger the loop to see logs."
+        
+    try:
+        with open(log_path, "r", encoding="utf-8", errors="ignore") as f:
+            lines = f.readlines()
+            return "".join(lines[-num_lines:])
+    except Exception as e:
+        return f"Error reading logs: {str(e)}"
+
+def load_bot_env() -> dict:
+    env_path = Path(r"C:\BC RESEARCH\AI_FACTORY\bot.env")
+    env = {}
+    if env_path.exists():
+        for line in env_path.read_text(encoding="utf-8", errors="ignore").splitlines():
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                k, _, v = line.partition("=")
+                env[k.strip()] = v.strip()
+    return env
+
+# ── Interaction & Control Routes ──────────────────────────────────────────────
+
+@app.route("/api/run-agent", methods=["POST"])
+def api_run_agent():
+    data = request.json or {}
+    platform = data.get("platform", "")
+    status = start_agent_process(platform)
+    return jsonify({"status": status})
+
+@app.route("/api/agent-status", methods=["GET"])
+def api_agent_status():
+    status_dict = {}
+    for platform in ["agenton", "bountybook", "claw", "dealwork"]:
+        p = running_processes.get(platform)
+        status_dict[platform] = "running" if (p and p.poll() is None) else "idle"
+    return jsonify(status_dict)
+
+@app.route("/api/logs/<platform>", methods=["GET"])
+def api_get_logs(platform):
+    lines = int(request.args.get("lines", 100))
+    return jsonify({"logs": get_recent_logs(platform, lines)})
+
+@app.route("/api/chat", methods=["POST"])
+def api_chat():
+    data = request.json or {}
+    user_msg = data.get("message", "")
+    
+    env = load_bot_env()
+    or_key = env.get("OPENROUTER_API_KEY")
+    if not or_key:
+        return jsonify({
+            "response": "Error: OPENROUTER_API_KEY not found in bot.env. Chat assistant is disabled.",
+            "action": None
+        }), 500
+
+    earnings = get_all_earnings()
+    projections = calculate_projections(earnings)
+    completed_quests = count_completed_quests()
+    twitter_calls = get_twitter_calls_today()
+    telegram_actions = get_telegram_actions_today()
+
+    system_prompt = f"""You are the Money Machine Controller, an assistant that manages our autonomous earning agent stack.
+You have access to the current system context:
+- Total USDC Confirmed: ${projections['total_earned']:.2f}
+- Completed Quests: {completed_quests}
+- Active Platforms: {projections['platforms_active']}
+- Monthly Projected Earnings: ${projections['monthly']:.2f}
+- Daily Avg: ${projections['daily_avg']:.2f}
+- Today's Twitter API calls: {twitter_calls}/50
+- Today's Telegram Actions: {telegram_actions}
+
+Available commands you can trigger:
+1. Run AgentOn Loop: triggers `scripts/earn_loop.py`
+2. Run BountyBook Loop: triggers `agents/multi-earn/bountybook_agent.py`
+3. Run Claw Earn Loop: triggers `agents/multi-earn/claw_earn_agent.py`
+4. Run DealWork Loop: triggers `agents/multi-earn/dealwork_agent.py`
+
+If the user wants you to run any of these platforms, set the JSON output fields:
+- "action": "run_agent"
+- "platform": "agenton" | "bountybook" | "claw" | "dealwork"
+
+Respond ONLY in JSON format:
+{{
+  "response": "Your human-friendly message here",
+  "action": "action_name_or_null",
+  "platform": "platform_name_or_null"
+}}
+"""
+
+    try:
+        r = requests.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            headers={"Authorization": f"Bearer {or_key}", "Content-Type": "application/json"},
+            json={
+                "model": "google/gemini-2.5-flash",
+                "messages": [
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_msg}
+                ],
+                "response_format": {"type": "json_object"},
+                "timeout": 30
+            }
+        )
+        if r.status_code == 200:
+            resp_data = r.json()["choices"][0]["message"]["content"].strip()
+            parsed = json.loads(resp_data)
+            
+            action = parsed.get("action")
+            platform = parsed.get("platform")
+            if action == "run_agent" and platform:
+                run_status = start_agent_process(platform)
+                parsed["response"] += f"\n\n[System: Triggered {platform} loop. Status: {run_status}. Output will stream to the logs panel.]"
+            
+            return jsonify(parsed)
+        else:
+            return jsonify({
+                "response": f"API Error from OpenRouter (HTTP {r.status_code}): {r.text}",
+                "action": None
+            }), 500
+    except Exception as e:
+        return jsonify({
+            "response": f"Error calling AI model: {str(e)}",
+            "action": None
+        }), 500
+
 if __name__ == "__main__":
     print("=" * 60)
     print("  Money Machine Dashboard")
     print("  Open: http://localhost:5050")
     print("=" * 60)
-    app.run(host="0.0.0.0", port=5050, debug=False)
+    app.run(host="0.0.0.0", port=5050, debug=True)
