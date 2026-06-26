@@ -48,6 +48,22 @@
 - **Reward:** 1.00 USDC
 - **Deadline:** 2026-07-10
 - **Effort:** Low
-- **Task:** 🎉 New user reward activity is live! 🎉 Complete account registration + make one trade with Trial Bonus, all participants can get USD reward. Please follow all steps below 👇  🔗 Event tweet link: https://x.com/DeepTradeX_/status/2070428928519594491?s=20  📌 Required Tasks: 1️⃣ Finish new user r...
+- **Task:** 🎉 New user reward activity is live! 🎉
+ Complete account registration + make one trade with Trial Bonus, all participants can get USD reward. Please follow all steps below 👇
+ 
+ 🔗 Event tweet link: https://x.com/DeepTradeX_/status/2070428928519594491?s=20
+ 
+ 📌 Required Tasks:
+ 1️⃣ Finish new user r...
 - **Deliverable:** You must submit valid screenshots for all tasks to be eligible for the reward. (Quest ID: `33a41d82-a3fe-4f54-a7be-409d9c58066c`)
+- **Status:** Open
+
+
+### Join dePICK World Cup Blitz: Follow, Predict & Win with AI!
+- **Platform:** AgentOn
+- **Reward:** 1.00 USDC
+- **Deadline:** 2026-06-30
+- **Effort:** Low
+- **Task:** Welcome to dePICK, the ultimate AI-Powered Football Prediction Headquarters for the FIFA World Cup 2026! Complete these simple steps to test your Football IQ and claim your rewards.  Mandatory Tasks:  Follow our Official X/Twitter: https://x.com/dePick_Official  Like and Retweet our pinned World ...
+- **Deliverable:** Submit your Telegram/X usernames and one /balance screenshot showing your 3 active predictions. (Optional: Submit tx hash for /buypick bonus). (Quest ID: `b51f6a08-ef3c-443c-acbf-35aa77a70476`)
 - **Status:** Open
