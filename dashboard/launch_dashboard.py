@@ -13,7 +13,7 @@ API_SCRIPT = ROOT_DIR / "dashboard" / "dashboard_api.py"
 
 def main():
     print("=" * 60)
-    print("🚀 Starting Sovereign Earn Stack Dashboard...")
+    print("🚀 Starting Money Machine...")
     print("=" * 60)
 
     # 1. Start the Flask API server

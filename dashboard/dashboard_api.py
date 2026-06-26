@@ -259,7 +259,7 @@ def api_earnings():
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  AgentOn Earn Dashboard")
+    print("  Money Machine Dashboard")
     print("  Open: http://localhost:5050")
     print("=" * 60)
     app.run(host="0.0.0.0", port=5050, debug=False)
