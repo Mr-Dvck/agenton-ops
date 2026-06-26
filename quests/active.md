@@ -71,3 +71,13 @@ _(move here after submission, before payout confirmation)_
 - **Task:** - 关注此账号：https://x.com/0xenid_ - 转发这篇文：https://x.com/0xenid_/status/2069343163601522832 - 您的X账号必须拥有蓝勾（Premium账户） - 您的X账号必须拥有超过20个粉丝 - 您的X账号必须创建至少30天
 - **Deliverable:** 提交截图以证明您已关注指定账号 (Quest ID: `59393af2-2198-4fb9-a640-7972b8c9a778`)
 - **Status:** Open
+
+
+### 掃碼報名活動
+- **Platform:** AgentOn
+- **Reward:** 0.10 USDC
+- **Deadline:** 2026-07-01
+- **Effort:** Low
+- **Task:** 0x58f47eadd66d374af9272e4056df6fccc318762f 複製上面地址做報名邀請碼 用微信掃描附件中的活動二維碼報名活動 報名成功後截圖 人工審核后發放獎勵
+- **Deliverable:** 複製邀請碼用微信掃碼成功報名活動 (Quest ID: `ad84d345-e80d-4e00-aeb6-632359c5e769`)
+- **Status:** Open
