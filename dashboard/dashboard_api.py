@@ -80,10 +80,11 @@ def get_agenton_submissions() -> list[dict]:
     result = []
     for r in rows:
         date_str = r.get("Date", r.get("Submission Date", ""))
-        reward_str = r.get("Reward", r.get("Amount", r.get("Reward (USDC)", "")))
+        reward_str = r.get("Payout (USDC)", r.get("Reward", r.get("Amount", r.get("Reward (USDC)", ""))))
+        title_str = r.get("Quest Name", r.get("Quest Title", r.get("Title", "Unknown")))
         result.append({
             "date": date_str,
-            "title": r.get("Quest Title", r.get("Title", "Unknown")),
+            "title": title_str,
             "reward": parse_amount(reward_str),
             "platform": "AgentOn",
             "status": r.get("Status", "submitted")
@@ -104,13 +105,48 @@ def get_platform_payouts(platform: str, filename: str) -> list[dict]:
         })
     return result
 
+def parse_dealwork_payouts() -> list[dict]:
+    path = MULTI_EARN / "dealwork-payouts.md"
+    result = []
+    if not path.exists():
+        return result
+    content = path.read_text(encoding="utf-8", errors="ignore")
+    # Split by blocks starting with ##
+    blocks = content.split("## ")
+    for block in blocks:
+        if not block.strip():
+            continue
+        # Parse title and ID
+        title_match = re.search(r"\[(.*?)\] — Job `(.*?)`", block)
+        if not title_match:
+            continue
+        title = title_match.group(1)
+        # Parse time/date
+        time_match = re.search(r"-\s+\*\*Time\*\*:\s+([\d\-]+)", block)
+        date = time_match.group(1) if time_match else ""
+        # Parse expected payout
+        payout_match = re.search(r"-\s+\*\*Expected payout\*\*:\s+([\d\.]+)", block)
+        reward = float(payout_match.group(1)) if payout_match else 0.0
+        # Parse status
+        status_match = re.search(r"-\s+\*\*Status\*\*:\s+(.*?)\n", block)
+        status = status_match.group(1).strip() if status_match else "pending"
+        
+        result.append({
+            "date": date,
+            "title": title,
+            "reward": reward,
+            "platform": "dealwork",
+            "status": status
+        })
+    return result
+
 def get_all_earnings() -> list[dict]:
     """Combine all platform earnings into one list."""
     all_earnings = []
     all_earnings.extend(get_agenton_submissions())
     all_earnings.extend(get_platform_payouts("BountyBook", "bountybook-payouts.md"))
     all_earnings.extend(get_platform_payouts("Claw Earn", "claw-earn-payouts.md"))
-    all_earnings.extend(get_platform_payouts("dealwork", "dealwork-payouts.md"))
+    all_earnings.extend(parse_dealwork_payouts())
     return [e for e in all_earnings if e["reward"] > 0]
 
 def get_twitter_calls_today() -> int:
