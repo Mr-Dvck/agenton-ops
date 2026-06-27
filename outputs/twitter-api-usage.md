@@ -27,3 +27,5 @@ You are not permitted to perform this action. |
 | 2026-06-27 02:00:14 | POST /2/users/:id/following | 1909214065463091200 | $0.01 | Success |
 | 2026-06-27 02:00:14 | POST /2/users/:id/retweets | 1792440375496423984 | $0.01 | Failed: 400 Bad Request
 This Tweet cannot be found. |
+| 2026-06-27 08:00:15 | POST /2/users/:id/retweets | 1798363720760451368 | $0.01 | Failed: 400 Bad Request
+This Tweet cannot be found. |
