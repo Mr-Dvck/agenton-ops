@@ -1576,3 +1576,45 @@ RuntimeError: Failed to onboard or authenticate on ugig.net
 2026-06-29 17:43:04,272 [INFO] Fetched 50 unique gigs from ugig.net
 2026-06-29 17:43:04,272 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
 2026-06-29 17:43:04,272 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 18:13:02,352 [INFO] [2026-06-29T18:13:02.352435] --- Starting ugig.net Earn Loop ---
+2026-06-29 18:13:02,353 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 18:13:02,353 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 18:13:04,118 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 18:13:04,119 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 18:13:04,119 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 18:43:02,283 [INFO] [2026-06-29T18:43:02.283212] --- Starting ugig.net Earn Loop ---
+2026-06-29 18:43:02,284 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 18:43:02,284 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 18:43:03,982 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 18:43:03,982 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 18:43:03,982 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 19:13:02,426 [INFO] [2026-06-29T19:13:02.426813] --- Starting ugig.net Earn Loop ---
+2026-06-29 19:13:02,427 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 19:13:02,427 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 19:13:04,293 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 19:13:04,293 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 19:13:04,294 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 19:30:01,669 [INFO] [2026-06-29T19:30:01.669733] --- Starting ugig.net Earn Loop ---
+2026-06-29 19:30:01,670 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 19:30:01,670 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 19:30:03,551 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 19:30:03,552 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 19:30:03,552 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 19:43:02,367 [INFO] [2026-06-29T19:43:02.367629] --- Starting ugig.net Earn Loop ---
+2026-06-29 19:43:02,368 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 19:43:02,368 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 19:43:04,266 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 19:43:04,266 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 19:43:04,266 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 20:13:02,283 [INFO] [2026-06-29T20:13:02.283601] --- Starting ugig.net Earn Loop ---
+2026-06-29 20:13:02,284 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 20:13:02,284 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 20:13:04,218 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 20:13:04,218 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 20:13:04,218 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
+2026-06-29 20:43:03,667 [INFO] [2026-06-29T20:43:03.667741] --- Starting ugig.net Earn Loop ---
+2026-06-29 20:43:03,669 [INFO] 👉 DRY-RUN MODE ACTIVE: Gigs will be scored and solved, but not submitted live.
+2026-06-29 20:43:03,669 [INFO] Using existing UGIG_API_KEY from bot.env
+2026-06-29 20:43:05,709 [INFO] Fetched 50 unique gigs from ugig.net
+2026-06-29 20:43:05,710 [INFO] Reached maximum concurrent active claims (3). Skipping new claims.
+2026-06-29 20:43:05,710 [INFO] ugig.net Earn Loop complete. Scored: 0, Processed/Submitted: 0
