@@ -271,3 +271,11 @@ credits depleted |
 Your enrolled account [2070228090341511168] does not have any credits to fulfil |
 | 2026-07-11 08:01:03 | POST /2/tweets | Excited about the future of decentralized finance! | $0.01 | Failed: 402 Payment Required
 Your enrolled account [2070228090341511168] does not have any credits to fulfil |
+| 2026-07-11 10:00:50 | GET /2/users/by/username/:username | WhaleyNikk41200 | $0.01 | Failed: 402 Payment Required
+credits depleted |
+| 2026-07-11 10:00:52 | GET /2/users/by/username/:username | WhaleyNikk41200 | $0.01 | Failed: 402 Payment Required
+credits depleted |
+| 2026-07-11 10:00:55 | POST /2/tweets | Excited to share some thoughts on the latest devel | $0.01 | Failed: 402 Payment Required
+Your enrolled account [2070228090341511168] does not have any credits to fulfil |
+| 2026-07-11 10:00:56 | POST /2/tweets | Excited to be part of the X community! Looking for | $0.01 | Failed: 402 Payment Required
+Your enrolled account [2070228090341511168] does not have any credits to fulfil |
